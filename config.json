@@ -1,0 +1,10 @@
+{
+    "function": "rosenbrock",
+    "dimension": 2,
+    "initial_point": "0,0",
+    "initial_step": 0.05,
+    "step_reduction": 0.5,
+    "expansion_factor": 2.0,
+    "tolerance": 0.0001,
+    "max_iterations": 5000
+}

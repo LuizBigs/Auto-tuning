@@ -42,14 +42,14 @@ class ParameterTunneling:
         
         # Parâmetros gerais
         parser.add_argument('--config', type=str, help='Arquivo de configuração JSON')
-        parser.add_argument('--function', type=str, required=True, 
-                          help='Função objetivo (sphere, rosenbrock, etc.)')
+        parser.add_argument('--function', type=str, 
+                    help='Função objetivo (sphere, rosenbrock, etc.)')
         parser.add_argument('--dimension', type=int, default=2, 
                           help='Dimensão do problema')
         
         # Parâmetros do algoritmo
-        parser.add_argument('--initial_step', type=float, default=1.0,
-                          help='Tamanho inicial do passo')
+        parser.add_argument('--initial_step', type=float, 
+                    help='Tamanho inicial do passo')
         parser.add_argument('--step_reduction', type=float, default=0.5,
                           help='Fator de redução do passo')
         parser.add_argument('--tolerance', type=float, default=1e-6,

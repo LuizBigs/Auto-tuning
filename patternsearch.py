@@ -69,8 +69,7 @@ class PatternSearch:
         improvement = True
         
         while (iteration < self.max_iterations and 
-               self.step_size > self.tolerance and 
-               improvement):
+       self.step_size > self.tolerance):
             
             improvement = False
             

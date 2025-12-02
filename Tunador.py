@@ -40,7 +40,7 @@ except ImportError:
     pass
 
 # ---------------- Configurações Padrão (Sobrescritas via CLI) ----------------
-DEFAULT_EXECUTABLE_PATH = "simulado.exe"
+DEFAULT_EXECUTABLE_PATH = "provab2.exe"
 DEFAULT_REPLICATES = 1
 DEFAULT_RETRIES = 2
 DEFAULT_TIMEOUT_S = 12.0
@@ -102,11 +102,11 @@ def validate_executable(path: str):
 
 def execute_external_process(exec_path: str, opt_type: str, params: List[int], timeout: float, retries: int) -> Tuple[float, str, float]:
     """
-    Chama o executável (simulaod.exe) com múltiplas tentativas e timeout. 
+    Chama o executável (provab2.exe) com múltiplas tentativas e timeout. 
     Retorna (valor_otimizado, saída_completa, tempo_gasto).
     """
-    # Formato esperado: [exec_path, P1, P2, P3, P4, P5]
-    # Nota: opt_type não é usado pelo executável simulado.exe
+    # Formato esperado: [exec_path, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10]
+    # Nota: opt_type não é usado pelo executável
     arguments = [exec_path] + [str(int(x)) for x in params]
     last_exception = None
     backoff_delay = 0.1
@@ -228,22 +228,22 @@ def optimization_method_ps(exec_path, replicates, retries, timeout, max_iter=100
 
     try:
         for start in range(multistarts):
-            # 5 parâmetros numéricos (valores de 1 a 100)
+            # 10 parâmetros numéricos (valores de 1 a 1000)
             opt_type = "default"  # Mantém para compatibilidade, mas não é usado
             
             # Estratégia de inicialização diversificada
             if start == 0:
                 # Primeira tentativa: todos no meio
-                current_params = [50, 50, 50, 50, 50]
+                current_params = [500, 500, 500, 500, 500, 500, 500, 500, 500, 500]
             elif start == 1:
                 # Segunda tentativa: todos altos
-                current_params = [100, 100, 100, 100, 100]
+                current_params = [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
             elif start == 2:
                 # Terceira tentativa: valores altos variados
-                current_params = [random.randint(70, 100) for _ in range(5)]
+                current_params = [random.randint(700, 1000) for _ in range(10)]
             else:
                 # Outras tentativas: totalmente aleatório
-                current_params = [random.randint(1, 100) for _ in range(5)]
+                current_params = [random.randint(1, 1000) for _ in range(10)]
 
             try:
                 current_value, _, _ = evaluate_average_performance(exec_path, opt_type, current_params, replicates, timeout, retries, method_label="Pattern Search", executor=executor)
@@ -257,15 +257,15 @@ def optimization_method_ps(exec_path, replicates, retries, timeout, max_iter=100
             # Scores para comparação (sempre: maior é melhor)
             current_score = score_for_goal(current_value, goal)
 
-            step_size = 25  # Começar com passos maiores para explorar mais rápido
+            step_size = 250  # Começar com passos maiores para explorar mais rápido (proporcional a 1-1000)
             iteration_count = 0
             last_progress_report = 0
             while step_size >= 1 and iteration_count < max_iter:
                 candidates = []
-                for i in range(5):
+                for i in range(10):
                     for delta in (-step_size, step_size):
                         candidate_params = current_params.copy()
-                        candidate_params[i] = int(min(100, max(1, candidate_params[i] + delta)))
+                        candidate_params[i] = int(min(1000, max(1, candidate_params[i] + delta)))
                         candidates.append((candidate_params, i, delta))
 
                 improved = False
@@ -380,7 +380,7 @@ def optimization_method_ga(exec_path, replicates, retries, timeout, pop_size=GA_
         if i == 0 and seed_individual is not None:
             population.append({"tipo": seed_individual[0], "params": seed_individual[1].copy(), "valor": None})
         else:
-            population.append({"tipo": opt_type_default, "params": [random.randint(1, 100) for _ in range(5)], "valor": None})
+            population.append({"tipo": opt_type_default, "params": [random.randint(1, 1000) for _ in range(10)], "valor": None})
 
     # Avaliação da População Inicial
     try:
@@ -431,8 +431,8 @@ def optimization_method_ga(exec_path, replicates, retries, timeout, pop_size=GA_
 
                 # Mutação
                 if random.random() < 0.12:
-                    idx = random.randrange(5)
-                    child["params"][idx] = random.randint(1, 100)
+                    idx = random.randrange(10)
+                    child["params"][idx] = random.randint(1, 1000)
 
                 offspring.append(child)
 
@@ -526,8 +526,8 @@ def optimization_method_simplex(exec_path, replicates, retries, timeout, maxiter
         nonlocal iteration_counter
         iteration_counter += 1
         
-        # Converte o array de floats do SciPy para inteiros [1-100] (entrada do .exe)
-        params = [int(min(100, max(1, round(xx)))) for xx in x_float_array]
+        # Converte o array de floats do SciPy para inteiros [1-1000] (entrada do .exe)
+        params = [int(min(1000, max(1, round(xx)))) for xx in x_float_array]
         try:
             value, _, _ = evaluate_average_performance(exec_path, opt_type, params, replicates, timeout, retries, method_label="Simplex")
             
@@ -541,14 +541,14 @@ def optimization_method_simplex(exec_path, replicates, retries, timeout, maxiter
             simple_logger(f"  Simplex {iteration_counter}/{maxiter} - Falha na avaliação para parâmetros: {params}")
             return 1e9 # Penalidade alta
 
-    # Ponto inicial x0 para os 5 parâmetros (float/int)
-    initial_point_x0 = [random.randint(1, 100) for _ in range(5)]
+    # Ponto inicial x0 para os 10 parâmetros (float/int)
+    initial_point_x0 = [random.randint(1, 1000) for _ in range(10)]
 
     # Executa a otimização
     result = minimize(objective_function_scipy, initial_point_x0, method="Nelder-Mead", options={"maxiter": maxiter, "xatol": 1e-2, "fatol": 1e-2})
     
     # Processa o resultado final
-    best_params = [int(min(100, max(1, round(x)))) for x in result.x]
+    best_params = [int(min(1000, max(1, round(x)))) for x in result.x]
     
     # SciPy minimize retorna o valor da função objetivo (que pode ser -valor_real se goal=max)
     # Por isso, invertemos o sinal se o objetivo era maximizar.
@@ -583,8 +583,8 @@ def optimization_method_optuna(exec_path, replicates, retries, timeout, n_trials
     def objective_optuna(trial):
         # Define o espaço de busca (hiperparâmetros)
         opt_type = "default"  # Tipo fixo, não usado pelo executável
-        # 5 parâmetros (inteiros 1-100)
-        params = [trial.suggest_int(f"p{i+1}", 1, 100) for i in range(5)]
+        # 10 parâmetros (inteiros 1-1000)
+        params = [trial.suggest_int(f"p{i+1}", 1, 1000) for i in range(10)]
 
         try:
             avg_value, _, _ = evaluate_average_performance(exec_path, opt_type, params, replicates, timeout, retries, method_label="Optuna (bayesiana)")
@@ -602,7 +602,7 @@ def optimization_method_optuna(exec_path, replicates, retries, timeout, n_trials
     
     # Extrai o melhor conjunto de parâmetros
     best_type = best_trial.params.get("tipo")
-    best_params_list = [best_trial.params.get(f"p{i+1}") for i in range(5)]
+    best_params_list = [best_trial.params.get(f"p{i+1}") for i in range(10)]
 
     elapsed_time = time.time() - time_start
     return {"metodo": "Optuna (bayesiana)", "melhor_valor": best_trial.value, "parametros": (best_type, best_params_list), "tempo": elapsed_time, "study": study}
@@ -738,8 +738,12 @@ def generate_detailed_report(all_results, global_time_start, args, method_filter
         exec_time = result.get("tempo", 0)
         params = result.get("parametros")
         
+        # Conta avaliações específicas deste método
+        method_eval_count = len([r for r in _global_evaluations_record if r.get("metodo") == method_name])
+        
         report_lines.append(f"\n{i}. {method_name}")
         report_lines.append(f"   Melhor Valor: {best_value:.6g}" if best_value not in (None, -math.inf) else "   Melhor Valor: N/A")
+        report_lines.append(f"   Número de Tentativas/Avaliações: {method_eval_count}")
         
         if exec_time is not None:
             report_lines.append(f"   Tempo de Execução: {exec_time:.2f} segundos ({exec_time/60:.2f} minutos)")
@@ -761,15 +765,20 @@ def generate_detailed_report(all_results, global_time_start, args, method_filter
     valid_results = [r for r in results_to_report if r.get("melhor_valor") not in (None, -math.inf)]
     if valid_results:
         winner = max(valid_results, key=lambda r: score_for_goal(r["melhor_valor"], args.goal))
+        winner_method_name = winner.get('metodo', 'Desconhecido')
+        winner_eval_count = len([r for r in _global_evaluations_record if r.get("metodo") == winner_method_name])
+        
         report_lines.append("🏆 MELHOR RESULTADO GERAL:")
         report_lines.append("-" * 80)
-        report_lines.append(f"Método Vencedor: {winner.get('metodo', 'Desconhecido')}")
+        report_lines.append(f"Método Vencedor: {winner_method_name}")
         
         winner_value = winner.get('melhor_valor')
         if winner_value is not None and winner_value != -math.inf:
             report_lines.append(f"Melhor Valor: {winner_value:.6g}")
         else:
             report_lines.append(f"Melhor Valor: N/A")
+        
+        report_lines.append(f"Número de Tentativas/Avaliações: {winner_eval_count}")
         
         winner_tempo = winner.get('tempo')
         if winner_tempo is not None:

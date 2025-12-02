@@ -1,0 +1,27 @@
+{
+  "timestamp": 1764717544.8505876,
+  "metodo": "Combined (GA after PS)",
+  "resultado": {
+    "metodo": "Combined (GA after PS)",
+    "melhor_valor": 590.0,
+    "parametros": [
+      "default",
+      [
+        750,
+        119,
+        500,
+        302,
+        681,
+        250,
+        781,
+        500,
+        649,
+        248
+      ]
+    ],
+    "tempo": 109.26918482780457
+  },
+  "total_avaliacoes": 0,
+  "tempo_total_s": 109.26918482780457,
+  "objetivo": "max"
+}

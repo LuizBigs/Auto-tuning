@@ -1,0 +1,49 @@
+================================================================================
+RELATÓRIO DETALHADO DE OTIMIZAÇÃO
+================================================================================
+Data/Hora: 2025-12-02 20:19:03
+Tempo Total de Execução: 698.15 segundos (11.64 minutos)
+Objetivo: MAXIMIZAR
+Total de Avaliações do Modelo: 3229
+================================================================================
+
+RESULTADOS POR MÉTODO:
+--------------------------------------------------------------------------------
+
+1. Pattern Search
+   Melhor Valor: 1492
+   Número de Tentativas/Avaliações: 2184
+   Tempo de Execução: 445.55 segundos (7.43 minutos)
+   Tipo: default
+   Parâmetros: [800, 799, 801, 801, 799, 799, 799, 800, 799, 799]
+
+
+2. Algoritmo Genético
+   Melhor Valor: 837
+   Número de Tentativas/Avaliações: 1045
+   Tempo de Execução: 136.44 segundos (2.27 minutos)
+   Tipo: default
+   Parâmetros: [763, 756, 699, 805, 765, 748, 471, 820, 788, 828]
+
+
+3. Combined (GA after PS)
+   Melhor Valor: 590
+   Número de Tentativas/Avaliações: 0
+   Tempo de Execução: 109.27 segundos (1.82 minutos)
+   Tipo: default
+   Parâmetros: [750, 119, 500, 302, 681, 250, 781, 500, 649, 248]
+
+--------------------------------------------------------------------------------
+
+🏆 MELHOR RESULTADO GERAL:
+--------------------------------------------------------------------------------
+Método Vencedor: Pattern Search
+Melhor Valor: 1492
+Número de Tentativas/Avaliações: 2184
+Tempo de Execução: 445.55 segundos (7.43 minutos)
+Tipo: default
+Parâmetros Ótimos: [800, 799, 801, 801, 799, 799, 799, 800, 799, 799]
+
+================================================================================
+FIM DO RELATÓRIO
+================================================================================

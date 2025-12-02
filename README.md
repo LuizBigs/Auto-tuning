@@ -21,11 +21,11 @@ Sistema inteligente de otimização automática que utiliza múltiplos algoritmo
 
 ## 🎯 Visão Geral
 
-O **Auto-tuning** é um sistema de otimização que automaticamente encontra os melhores valores para 5 parâmetros (de 1 a 100) que maximizam ou minimizam a saída de um programa executável externo (`simulado.exe`).
+O **Auto-tuning** é um sistema de otimização que automaticamente encontra os melhores valores para 10 parâmetros (de 1 a 1000) que maximizam ou minimizam a saída de um programa executável externo (`provab2.exe`).
 
 ### Como Funciona?
 
-1. **Entrada**: 5 parâmetros numéricos (P1, P2, P3, P4, P5)
+1. **Entrada**: 10 parâmetros numéricos (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10)
 2. **Processamento**: Algoritmos de otimização testam diferentes combinações
 3. **Execução**: Cada combinação é executada no programa externo
 4. **Avaliação**: O sistema analisa os resultados
@@ -129,7 +129,7 @@ python --version
 ```
 
 ### 3. Coloque seu Executável
-Coloque o arquivo `simulado.exe` no mesmo diretório do `Tunador.py`
+Coloque o arquivo `provab2.exe` no mesmo diretório do `Tunador.py`
 
 ---
 
@@ -158,11 +158,11 @@ Digite sua escolha [1/2/3]:
 Você verá o progresso em tempo real:
 
 ```
-[2025-12-02 10:30:15] 🔍 PS Start 1/2 - Inicial: [50, 50, 50, 50, 50] = 30.00
-[2025-12-02 10:30:20] ✨ NOVO MELHOR: [80, 80, 80, 80, 80] = 150.00
-[2025-12-02 10:30:45] 📈 Progresso: 50 avaliações, 30.5s decorridos, step=12, atual=150.00
-[2025-12-02 10:35:10] ✨ NOVO MELHOR: [85, 82, 88, 84, 86] = 165.50
-[2025-12-02 10:40:00] 🏁 Pattern Search finalizado: Melhor=165.50 em [85, 82, 88, 84, 86]
+[2025-12-02 10:30:15] 🔍 PS Start 1/2 - Inicial: [500, 500, 500, 500, 500, 500, 500, 500, 500, 500] = 5000.00
+[2025-12-02 10:30:20] ✨ NOVO MELHOR: [800, 800, 800, 800, 800, 800, 800, 800, 800, 800] = 8000.00
+[2025-12-02 10:30:45] 📈 Progresso: 50 avaliações, 30.5s decorridos, step=125, atual=8000.00
+[2025-12-02 10:35:10] ✨ NOVO MELHOR: [850, 820, 880, 840, 860, 830, 870, 810, 890, 825] = 8475.00
+[2025-12-02 10:40:00] 🏁 Pattern Search finalizado: Melhor=8475.00 em [850, 820, 880, 840, 860, 830, 870, 810, 890, 825]
 ```
 
 ### Interromper a Execução
@@ -184,12 +184,12 @@ Pressione `Ctrl+C` a qualquer momento para parar graciosamente. O sistema salvar
 **Parâmetros:**
 - `ps_max_iter`: 700 iterações
 - `ps_multistarts`: 2 pontos iniciais
-- `step_size`: Começa em 25, reduz pela metade
+- `step_size`: Começa em 250, reduz pela metade
 
 **Estratégia de Inicialização:**
-- Start 0: [50, 50, 50, 50, 50] - Meio do espaço
-- Start 1: [100, 100, 100, 100, 100] - Valores máximos
-- Start 2+: Aleatório [70-100] - Valores altos variados
+- Start 0: [500, 500, 500, 500, 500, 500, 500, 500, 500, 500] - Meio do espaço
+- Start 1: [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000] - Valores máximos
+- Start 2+: Aleatório [700-1000] - Valores altos variados
 
 **Melhor para:**
 - Exploração sistemática do espaço
@@ -265,7 +265,7 @@ Todas as avaliações de todos os métodos executados.
 **Exemplo:**
 ```csv
 metodo,tipo,params,valor,tempo,rep,stdout,erro,timestamp
-Pattern Search,default,"80,80,80,80,80",150.0,0.15,0,150.00,,1701518400.123
+Pattern Search,default,"800,800,800,800,800,800,800,800,800,800",8000.0,0.15,0,8000.00,,1701518400.123
 ```
 
 ---
@@ -282,14 +282,14 @@ Resumo comparativo de todos os métodos.
   "resultados": [
     {
       "metodo": "Pattern Search",
-      "melhor_valor": 165.50,
-      "parametros": ["default", [85, 82, 88, 84, 86]],
+      "melhor_valor": 8475.00,
+      "parametros": ["default", [850, 820, 880, 840, 860, 830, 870, 810, 890, 825]],
       "tempo": 1200.5
     }
   ],
   "vencedor": {
     "metodo": "Pattern Search",
-    "melhor_valor": 165.50
+    "melhor_valor": 8475.00
   },
   "total_avaliacoes": 583,
   "tempo_total_s": 1200.5,
@@ -317,20 +317,22 @@ RESULTADOS POR MÉTODO:
 --------------------------------------------------------------------------------
 
 1. Pattern Search
-   Melhor Valor: 165.5
+   Melhor Valor: 8475.0
+   Número de Tentativas/Avaliações: 583
    Tempo de Execução: 1200.50 segundos (20.01 minutos)
    Tipo: default
-   Parâmetros: [85, 82, 88, 84, 86]
+   Parâmetros: [850, 820, 880, 840, 860, 830, 870, 810, 890, 825]
 
 --------------------------------------------------------------------------------
 
 🏆 MELHOR RESULTADO GERAL:
 --------------------------------------------------------------------------------
 Método Vencedor: Pattern Search
-Melhor Valor: 165.5
+Melhor Valor: 8475.0
+Número de Tentativas/Avaliações: 583
 Tempo de Execução: 1200.50 segundos (20.01 minutos)
 Tipo: default
-Parâmetros Ótimos: [85, 82, 88, 84, 86]
+Parâmetros Ótimos: [850, 820, 880, 840, 860, 830, 870, 810, 890, 825]
 
 ================================================================================
 FIM DO RELATÓRIO
@@ -354,8 +356,8 @@ Resumo específico do Pattern Search
   "metodo": "Pattern Search",
   "resultado": {
     "metodo": "Pattern Search",
-    "melhor_valor": 165.50,
-    "parametros": ["default", [85, 82, 88, 84, 86]],
+    "melhor_valor": 8475.00,
+    "parametros": ["default", [850, 820, 880, 840, 860, 830, 870, 810, 890, 825]],
     "tempo": 1200.5
   },
   "total_avaliacoes": 583,
@@ -384,7 +386,7 @@ python Tunador.py [opções]
 
 | Parâmetro | Descrição | Padrão |
 |-----------|-----------|--------|
-| `--exec` | Caminho para o executável | `simulado.exe` |
+| `--exec` | Caminho para o executável | `provab2.exe` |
 | `--execution-time` | Tempo de execução (minutos) | `20` |
 | `--goal` | Objetivo: `max` ou `min` | `max` |
 | `--parallel` | Ativa execução paralela | `True` |
@@ -453,7 +455,7 @@ python Tunador.py --out-csv meus_dados.csv --out-json meu_resumo.json --out-repo
 Auto-tuning/
 │
 ├── Tunador.py                      # Script principal
-├── simulado.exe                    # Executável a ser otimizado
+├── provab2.exe                     # Executável a ser otimizado
 ├── README.md                       # Este arquivo
 │
 ├── avaliacoes.csv                  # Todas as avaliações (geral)
@@ -475,20 +477,20 @@ Auto-tuning/
 
 ### Formato de Entrada do Executável
 
-O executável deve aceitar 5 parâmetros numéricos:
+O executável deve aceitar 10 parâmetros numéricos:
 
 ```bash
-simulado.exe P1 P2 P3 P4 P5
+provab2.exe P1 P2 P3 P4 P5 P6 P7 P8 P9 P10
 ```
 
-Onde cada parâmetro é um inteiro entre 1 e 100.
+Onde cada parâmetro é um inteiro entre 1 e 1000.
 
 ### Formato de Saída do Executável
 
 O executável deve imprimir um valor numérico na saída padrão (stdout):
 
 ```
-150.00
+8475.00
 ```
 
 O sistema extrairá automaticamente o primeiro número encontrado.
@@ -520,7 +522,7 @@ ga_generations = 70  # Número de gerações
 Edite no código `Tunador.py` linha ~268:
 
 ```python
-step_size = 25  # Tamanho inicial do passo
+step_size = 250  # Tamanho inicial do passo (proporcional a 1-1000)
 ```
 
 ---
@@ -528,7 +530,7 @@ step_size = 25  # Tamanho inicial do passo
 ## 🐛 Solução de Problemas
 
 ### Problema: "Executável não encontrado"
-**Solução:** Certifique-se que `simulado.exe` está no mesmo diretório ou use `--exec` com caminho completo.
+**Solução:** Certifique-se que `provab2.exe` está no mesmo diretório ou use `--exec` com caminho completo.
 
 ### Problema: "Timeout excedido"
 **Solução:** Aumente o timeout com `--timeout 30` (em segundos).

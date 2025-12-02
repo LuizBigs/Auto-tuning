@@ -1,0 +1,90 @@
+{
+  "timestamp": 1764717543.5876193,
+  "modo_selecionado": "combined",
+  "tempo_execucao_minutos": 20,
+  "resultados": [
+    {
+      "metodo": "Pattern Search",
+      "melhor_valor": 1492.0,
+      "parametros": [
+        "default",
+        [
+          800,
+          799,
+          801,
+          801,
+          799,
+          799,
+          799,
+          800,
+          799,
+          799
+        ]
+      ],
+      "tempo": 445.5535593032837
+    },
+    {
+      "metodo": "Algoritmo Genético",
+      "melhor_valor": 837.0,
+      "parametros": [
+        "default",
+        [
+          763,
+          756,
+          699,
+          805,
+          765,
+          748,
+          471,
+          820,
+          788,
+          828
+        ]
+      ],
+      "tempo": 136.43694019317627
+    },
+    {
+      "metodo": "Combined (GA after PS)",
+      "melhor_valor": 590.0,
+      "parametros": [
+        "default",
+        [
+          750,
+          119,
+          500,
+          302,
+          681,
+          250,
+          781,
+          500,
+          649,
+          248
+        ]
+      ],
+      "tempo": 109.26918482780457
+    }
+  ],
+  "vencedor": {
+    "metodo": "Pattern Search",
+    "melhor_valor": 1492.0,
+    "parametros": [
+      "default",
+      [
+        800,
+        799,
+        801,
+        801,
+        799,
+        799,
+        799,
+        800,
+        799,
+        799
+      ]
+    ],
+    "tempo": 445.5535593032837
+  },
+  "total_avaliacoes": 3229,
+  "tempo_total_s": 698.1444571018219,
+  "objetivo": "max"
+}

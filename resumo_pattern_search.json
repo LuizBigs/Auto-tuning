@@ -1,0 +1,27 @@
+{
+  "timestamp": 1764717544.8200488,
+  "metodo": "Pattern Search",
+  "resultado": {
+    "metodo": "Pattern Search",
+    "melhor_valor": 1492.0,
+    "parametros": [
+      "default",
+      [
+        800,
+        799,
+        801,
+        801,
+        799,
+        799,
+        799,
+        800,
+        799,
+        799
+      ]
+    ],
+    "tempo": 445.5535593032837
+  },
+  "total_avaliacoes": 2184,
+  "tempo_total_s": 445.5535593032837,
+  "objetivo": "max"
+}

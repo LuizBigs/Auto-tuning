@@ -1,0 +1,27 @@
+{
+  "timestamp": 1764717544.8445916,
+  "metodo": "Algoritmo Genético",
+  "resultado": {
+    "metodo": "Algoritmo Genético",
+    "melhor_valor": 837.0,
+    "parametros": [
+      "default",
+      [
+        763,
+        756,
+        699,
+        805,
+        765,
+        748,
+        471,
+        820,
+        788,
+        828
+      ]
+    ],
+    "tempo": 136.43694019317627
+  },
+  "total_avaliacoes": 1045,
+  "tempo_total_s": 136.43694019317627,
+  "objetivo": "max"
+}
